@@ -1,18 +1,18 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\backend\DashboardController;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
 
-Route::group(['namespace' => 'App\Http\Controllers\Backend'], function () {
+Route::group(['namespace' => 'App\Http\Controllers\backend'], function () {
     Route::resource('dashboard', DashboardController::class);
 });
 
-Route::group(['namespace' => 'Backend'], function() 
+Route::group(['namespace' => 'backend'], function() 
 {
     Route::resource('dashboard', 'DashboardController');
     Route::resource('pendidikan', 'PendidikanController');
