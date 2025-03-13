@@ -8,13 +8,15 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     *
+     * @return void
      */
-    public function up(): void
+    public function up()
     {
-        Schema::create('pendidikan', function (Blueprint $table) {
+        Schema::create('pengalaman_kerja', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nama');
-            $table->tinyInteger('tingkatan');
+            $table->string('jabatan');
             $table->year('tahun_masuk');
             $table->year('tahun_keluar');
             $table->timestamps();
@@ -23,9 +25,11 @@ return new class extends Migration
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
-    public function down(): void
+    public function down()
     {
-        Schema::dropIfExists('pendidikan');
+        Schema::dropIfExists('pengalaman_kerja');
     }
 };

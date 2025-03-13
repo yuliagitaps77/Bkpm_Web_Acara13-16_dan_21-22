@@ -1,120 +1,108 @@
 @extends('backend.layouts.template')
 
 @section('content')
-<section id="main-content">
-    <section class="wrapper">
-        <div class="row">
-            <div class="col-lg-12">
-                <h3 class="page-header"><i class="icon_document_alt"></i> Riwayat Hidup</h3>
-                <ol class="breadcrumb">
-                    <li><i class="fa fa-home"></i><a href="{{ url('dashboard') }}">Home</a></li>
-                    <li><i class="icon_document_alt"></i>Riwayat Hidup</li>
-                    <li><i class="fa fa-files-o"></i>Pengalaman Kerja</li>
-                </ol>
-            </div>
-        </div>
+<main id="main" class="main">
 
-        <!-- Form validations -->
+    <div class="pagetitle">
+        <h1>Riwayat Hidup</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ url('dashboard') }}">Home</a></li>
+                <li class="breadcrumb-item">Riwayat Hidup</li>
+                <li class="breadcrumb-item active">Pengalaman Kerja</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
         <div class="row">
-            <div class="col-lg-12">
-                <section class="panel">
-                    <header class="panel-heading">
-                        {{ isset($pengalaman_kerja) ? 'Mengubah' : 'Menambahkan' }} Pengalaman Kerja
-                    </header>
-                    <div class="panel-body">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">{{ isset($pengalaman_kerja) ? 'Edit' : 'Tambah' }} Pengalaman Kerja</h5>
+                    </div>
+
+                    <div class="card-body">
                         @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <strong>Whoops!</strong> There were some problems with your input.<br><br>
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
+                            <div class="alert alert-danger">
+                                <strong>Whoops!</strong> Ada kesalahan dalam input.<br><br>
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
                         @endif
 
-                        <div class="panel-body">
-                            <div class="form">
-                                <form class="form-validate form-horizontal" id="pengalaman_kerja_form" method="POST"
-                                    action="{{ isset($pengalaman_kerja) ? route('pengalaman_kerja.update', $pengalaman_kerja->id) : route('pengalaman_kerja.store') }}">
-                                    
-                                    {!! csrf_field() !!}
-                                    @isset($pengalaman_kerja)
-                                        {!! method_field('PUT') !!}
-                                        <input type="hidden" name="id" value="{{ $pengalaman_kerja->id }}" />
-                                    @endisset
+                        <form id="pengalaman_kerja_form" method="POST"
+                            action="{{ isset($pengalaman_kerja) ? route('pengalaman_kerja.update', $pengalaman_kerja->id) : route('pengalaman_kerja.store') }}">
+                            @csrf
+                            {!! isset($pengalaman_kerja) ? method_field('PUT') : '' !!}
 
-                                    <div class="form-group">
-                                        <label for="cname" class="control-label col-lg-2">Nama Perusahaan <span class="required">*</span></label>
-                                        <div class="col-lg-10">
-                                            <input class="form-control" id="nama" name="nama" minlength="5" type="text" 
-                                                value="{{ isset($pengalaman_kerja) ? $pengalaman_kerja->nama : '' }}" required />
-                                        </div>
-                                    </div>
+                            <input type="hidden" name="id" value="{{ $pengalaman_kerja->id ?? '' }}" />
 
-                                    <div class="form-group">
-                                        <label for="cname" class="control-label col-lg-2">Jabatan <span class="required">*</span></label>
-                                        <div class="col-lg-10">
-                                            <input class="form-control" id="jabatan" name="jabatan" minlength="5" type="text" 
-                                                value="{{ isset($pengalaman_kerja) ? $pengalaman_kerja->jabatan : '' }}" required />
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="curl" class="control-label col-lg-2">Tahun Masuk <span class="required">*</span></label>
-                                        <div class="col-lg-10">
-                                            <input id="tahun_masuk" type="text" name="tahun_masuk" class="form-control" 
-                                                value="{{ isset($pengalaman_kerja) ? $pengalaman_kerja->tahun_masuk : '' }}" required>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="curl" class="control-label col-lg-2">Tahun Selesai <span class="required">*</span></label>
-                                        <div class="col-lg-10">
-                                            <input id="tahun_keluar" type="text" name="tahun_keluar" class="form-control" 
-                                                value="{{ isset($pengalaman_kerja) ? $pengalaman_kerja->tahun_keluar : '' }}" required>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <div class="col-lg-offset-2 col-lg-10">
-                                            <button class="btn btn-primary" type="submit">Save</button>
-                                            <a href="{{ route('pengalaman_kerja.index') }}">
-                                                <button class="btn btn-default" type="button">Cancel</button>
-                                            </a>
-                                        </div>
-                                    </div>
-
-                                </form>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">Nama Perusahaan <span class="text-danger">*</span></label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="nama"
+                                        value="{{ isset($pengalaman_kerja) ? $pengalaman_kerja->nama : '' }}" required />
+                                </div>
                             </div>
-                        </div>
 
-                    </div>
-                </section>
-            </div>
-        </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">Jabatan <span class="text-danger">*</span></label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="jabatan"
+                                        value="{{ isset($pengalaman_kerja) ? $pengalaman_kerja->jabatan : '' }}" required />
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">Tahun Masuk <span class="text-danger">*</span></label>
+                                <div class="col-sm-10">
+                                    <input type="text" id="tahun_masuk" name="tahun_masuk" class="form-control"
+                                        value="{{ isset($pengalaman_kerja) ? $pengalaman_kerja->tahun_masuk : '' }}" required />
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">Tahun Selesai <span class="text-danger">*</span></label>
+                                <div class="col-sm-10">
+                                    <input type="text" id="tahun_keluar" name="tahun_keluar" class="form-control"
+                                        value="{{ isset($pengalaman_kerja) ? $pengalaman_kerja->tahun_keluar : '' }}" required />
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-10 offset-sm-2">
+                                    <button type="submit" class="btn btn-primary"><i class="bi bi-save"></i> Simpan</button>
+                                    <a href="{{ route('pengalaman_kerja.index') }}" class="btn btn-secondary"><i class="bi bi-arrow-left"></i> Kembali</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div><!-- End Card Body -->
+                </div><!-- End Card -->
+            </div><!-- End Col -->
+        </div><!-- End Row -->
     </section>
-</section>
 
+</main><!-- End #main -->
 @endsection
 
 @push('content-css')
-<link href="{{ asset('backend/css/bootstrap-datepicker.css') }}" rel="stylesheet" />
+    <link href="{{ asset('backend/css/bootstrap-datepicker.css') }}" rel="stylesheet" />
 @endpush
 
 @push('content-js')
-<script src="{{ asset('backend/js/bootstrap-datepicker.js') }}"></script>
-<script type="text/javascript">
-    $('#tahun_masuk').datepicker({
-        format: "yyyy",
-        minViewMode: "years",
-        viewMode: "years"
-    });
-
-    $('#tahun_keluar').datepicker({
-        format: "yyyy",
-        minViewMode: "years",
-        viewMode: "years"
-    });
-</script>
+    <script src="{{ asset('backend/js/bootstrap-datepicker.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#tahun_masuk, #tahun_keluar').datepicker({
+                format: "yyyy",
+                viewMode: "years",
+                minViewMode: "years",
+                autoclose: true
+            });
+        });
+    </script>
 @endpush
