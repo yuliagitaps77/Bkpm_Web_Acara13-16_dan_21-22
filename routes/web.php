@@ -5,6 +5,7 @@ use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\PendidikanController;
 use App\Http\Controllers\Backend\PengalamanKerjaController;
 
+
 Route::resource('/dashboard', DashboardController::class);
 
 Route::prefix('backend')->group(function () {
