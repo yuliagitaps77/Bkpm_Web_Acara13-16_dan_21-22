@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Backend;
 
+use App;
+use App\Http\Controllers\Controller;
 use App\Models\Pendidikan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
@@ -19,9 +21,14 @@ class ApiPendidikanController extends Controller
     public function create(Request $request)
     {
         $pendidikan = Pendidikan::create($request->all());
-        return response()->json($pendidikan, 201);
+    
+        return response()->json([
+            'status' => 'ok',
+            'data' => $pendidikan,
+            'message' => 'Pendidikan berhasil ditambahkan!'
+        ], 201);
     }
-
+    
     public function getPen($id)
     {
         $pendidikan = Pendidikan::find($id);

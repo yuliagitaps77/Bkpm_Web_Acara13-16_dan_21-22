@@ -19,10 +19,11 @@ Route::prefix('backend')->group(function () {
  
  Route::controller(ApiPendidikanController::class)->group(function () {
     Route::get('api_pendidikan', 'getAll');
-    Route::get('api_pendidikan/{id}', 'getPenById');
+    Route::get('api_pendidikan/{id}', 'getPen'); // Bukan getPenById
     Route::post('api_pendidikan', 'create');
-    Route::put('api_pendidikan/{id}', 'update');
+    Route::put('api_pendidikan/{id}', 'updatePen');
     Route::delete('api_pendidikan/{id}', 'deletePen');
 });
+
 
 });
